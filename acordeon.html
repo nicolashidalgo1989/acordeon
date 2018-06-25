@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Acordeon</title>
+	<style type="text/css"> 
+	.acordeon{ 
+	    margin-bottom:25px;
+	} 
+	.acordeon__box{  
+	    overflow: hidden;
+	    transition: height .3s ease-in-out; 
+	}
+	.acordeon__box__link{
+	    color: #444;
+	    font-size: 16px;
+	    padding: 16px; 
+	    position: relative;
+	    color:#444;
+	    text-align:left;
+	    border-top:1px solid #ddd;
+	    font-family: 'Open Sans Semi Bold', arial, sans-serif;
+	    transition:all .3s ease-in-out;
+	    width:100%; 
+	}
+	.acordeon__box__link:hover {
+	    text-decoration:none;
+	    color: #444; 
+	} 
+	.acordeon__box > .acordeon__box__link > .icon-flecha-derecha{ 
+	    text-align: right;
+	    right: 16px;
+	    top: 20px;
+	    position: absolute;
+	    color: #ec0000;
+	    transform: rotate(0deg); 
+	    transition: transform .3s ease-in-out;
+	}
+	.acordeon__box.active > .acordeon__box__link > .icon-flecha-derecha{ 
+	    transform:rotate(90deg);
+	}
+	.acordeon__box__content{
+	    padding:20px; 
+	    text-align:left;
+	    font-size:14px; 
+	    overflow:hidden;
+	} 
+	</style>
+</head>
+<body> 
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="box acordeon">
+					<div class="acordeon__box">
+						<a class="acordeon__box__link" data-acordeon="uno">acordeon uno</a> 
+						<div class="acordeon__box__content" id="uno">
+							contenido uno
+						</div>
+					</div>
+					<div class="acordeon__box">
+						<a class="acordeon__box__link" data-acordeon="dos">acordeon dos</a> 
+						<div class="acordeon__box__content" id="dos">
+							contenido dos
+						</div>
+					</div>
+					<div class="acordeon__box">
+						<a class="acordeon__box__link" data-acordeon="tres">acordeon tres</a> 
+						<div class="acordeon__box__content" id="tres">
+							contenido tres
+						</div>
+					</div>
+				</div>
+
+			</div> 
+		</div>
+	</div>
+	<script type="text/javascript"> 
+		//acordeon
+		const acordeonBox = document.querySelectorAll('.acordeon__box');  
+		document.addEventListener('DOMContentLoaded', listeners);  
+		function listeners () {  
+			for(i=0;i < acordeonBox.length;i++){  
+				const flecha = document.createElement('span');
+				acordeonBox[i].addEventListener('click', open);  
+				flecha.classList.add('icon-flecha-derecha');
+				acordeonBox[i].children[0].appendChild(flecha); 
+				acordeonBox[i].style.height = acordeonBox[i].children[0].offsetHeight + 'px'; 
+			} 
+		} 
+		function open(e){  
+			if(e.target.className === "acordeon__box__link"){ 
+				for(i=0;i < acordeonBox.length;i++){
+					acordeonBox[i].classList.remove('active');
+				} 
+				e.target.parentElement.classList.add('active'); 
+				let dataAcordeon = e.target.getAttribute('data-acordeon'); 
+				let idAcordeon = document.getElementById(dataAcordeon);  
+				for(i=0;i < acordeonBox.length;i++){ 
+					acordeonBox[i].style.height = acordeonBox[i].children[0].offsetHeight + 'px';
+				}  
+				idAcordeon.parentElement.style.height = idAcordeon.offsetHeight + idAcordeon.parentElement.children[0].offsetHeight +'px'; 
+				console.log(e.target);
+			} 
+		}
+	</script>	
+</body>
+</html>
